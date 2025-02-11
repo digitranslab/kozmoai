@@ -8,32 +8,32 @@ on:
         description: "Release Kozmoai Base"
         required: true
         type: boolean
-        default: false
+        default: true
       release_package_main:
         description: "Release Kozmoai"
         required: true
         type: boolean
-        default: false
+        default: true
       build_docker_base:
         description: "Build Docker Image for Kozmoai Base"
         required: true
         type: boolean
-        default: false
+        default: true
       build_docker_main:
         description: "Build Docker Image for Kozmoai"
         required: true
         type: boolean
-        default: false
+        default: true
       build_docker_ep:
         description: "Build Docker Image for Kozmoai with Entrypoint"
         required: false
         type: boolean
-        default: false
+        default: true
       pre_release:
         description: "Pre-release"
         required: false
         type: boolean
-        default: false
+        default: true
       create_release:
         description: "Whether to create a gh release"
         required: false

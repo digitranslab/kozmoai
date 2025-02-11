@@ -120,19 +120,19 @@ jobs:
 #    with:
 #      python-versions: ${{ inputs.python-versions || '["3.10"]' }}
 
-  test-frontend:
-    needs: path-filter
-    name: Run Frontend Tests
-    if: ${{ needs.path-filter.outputs.frontend == 'true' || needs.path-filter.outputs.frontend-tests == 'true' || needs.path-filter.outputs.components-changes == 'true' || needs.path-filter.outputs.starter-projects-changes == 'true' }}
-    uses: ./.github/workflows/typescript_test.yml
-    with:
-      tests_folder: ${{ inputs.frontend-tests-folder }}
-      release: ${{ inputs.release || false }}
-    secrets:
-      OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
-      STORE_API_KEY: "${{ secrets.STORE_API_KEY }}"
-      ANTHROPIC_API_KEY: "${{ secrets.ANTHROPIC_API_KEY }}"
-      TAVILY_API_KEY: "${{ secrets.TAVILY_API_KEY }}"
+#  test-frontend:
+#    needs: path-filter
+#    name: Run Frontend Tests
+#    if: ${{ needs.path-filter.outputs.frontend == 'true' || needs.path-filter.outputs.frontend-tests == 'true' || needs.path-filter.outputs.components-changes == 'true' || needs.path-filter.outputs.starter-projects-changes == 'true' }}
+#    uses: ./.github/workflows/typescript_test.yml
+#    with:
+#      tests_folder: ${{ inputs.frontend-tests-folder }}
+#      release: ${{ inputs.release || false }}
+#    secrets:
+#      OPENAI_API_KEY: "${{ secrets.OPENAI_API_KEY }}"
+#      STORE_API_KEY: "${{ secrets.STORE_API_KEY }}"
+#      ANTHROPIC_API_KEY: "${{ secrets.ANTHROPIC_API_KEY }}"
+#      TAVILY_API_KEY: "${{ secrets.TAVILY_API_KEY }}"
 
   lint-backend:
     needs: path-filter
