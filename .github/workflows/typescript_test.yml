@@ -297,7 +297,7 @@ jobs:
   merge-reports:
     # We need to repeat the condition at every step
     # https://github.com/actions/runner/issues/662
-    needs: setup-and-test
+#    needs: setup-and-test
     runs-on: ubuntu-latest
     if: always()
     env:
