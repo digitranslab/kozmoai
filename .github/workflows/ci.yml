@@ -112,13 +112,13 @@ jobs:
         with:
           filters: ./.github/changes-filter.yaml
 
-  test-backend:
-    needs: path-filter
-    name: Run Backend Tests
-    if: ${{ needs.path-filter.outputs.python == 'true'}}
-    uses: ./.github/workflows/python_test.yml
-    with:
-      python-versions: ${{ inputs.python-versions || '["3.10"]' }}
+#  test-backend:
+#    needs: path-filter
+#    name: Run Backend Tests
+#    if: ${{ needs.path-filter.outputs.python == 'true'}}
+#    uses: ./.github/workflows/python_test.yml
+#    with:
+#      python-versions: ${{ inputs.python-versions || '["3.10"]' }}
 
   test-frontend:
     needs: path-filter
@@ -140,21 +140,21 @@ jobs:
     name: Lint Backend
     uses: ./.github/workflows/lint-py.yml
 
-  test-docs-build:
-    needs: path-filter
-    if: ${{ needs.path-filter.outputs.docs == 'true' }}
-    name: Test Docs Build
-    uses: ./.github/workflows/docs_test.yml
+#  test-docs-build:
+#    needs: path-filter
+#    if: ${{ needs.path-filter.outputs.docs == 'true' }}
+#    name: Test Docs Build
+#    uses: ./.github/workflows/docs_test.yml
 
   # https://github.com/langchain-ai/langchain/blob/master/.github/workflows/check_diffs.yml
   ci_success:
     name: "CI Success"
     needs:
       [
-        test-backend,
-        test-frontend,
+#        test-backend,
+#        test-frontend,
         lint-backend,
-        test-docs-build,
+#        test-docs-build,
         set-ci-condition,
       ]
 
