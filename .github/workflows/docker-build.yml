@@ -220,7 +220,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.DIGITRANS_GITHUB_TOKEN}}
+          password: ${{ secrets.GITHUB_TOKEN}}
 
       - name: Build and push to Github Container Registry
         uses: docker/build-push-action@v6
@@ -281,7 +281,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.DIGITRANS_GITHUB_TOKEN}}
+          password: ${{ secrets.GITHUB_TOKEN}}
 
       - name: Wait for propagation (for backend)
         run: sleep 120
