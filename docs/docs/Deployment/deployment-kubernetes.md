@@ -55,7 +55,7 @@ We use [Minikube](https://minikube.sigs.k8s.io/docs/start/) for this example, bu
 2. Install KozmoAi with the default options in the `kozmoai` namespace.
 
 	```text
-	helm install kozmoai-ide kozmoai/kozmoai-ide -n kozmoai --create-namespace
+	helm install kozmoai-ide digitranslab/kozmoai-ide -n kozmoai --create-namespace
 	```
 
 3. Check the status of the pods
@@ -228,13 +228,13 @@ If you bundled the flow in a docker image, you can specify the image name in the
 If you want to download the flow from a remote location, you can specify the URL in the `values.yaml` file or with the `-set` flag:
 
 	```shell
-	helm install my-kozmoai-app kozmoai/kozmoai-runtime -n kozmoai --create-namespace --set image.repository=myuser/kozmoai-just-chat --set image.tag=1.0.0
+	helm install my-kozmoai-app digitranslab/kozmoai-runtime -n kozmoai --create-namespace --set image.repository=myuser/kozmoai-just-chat --set image.tag=1.0.0
 	
 	```
 
 
 	```shell
-	helm install my-kozmoai-app kozmoai/kozmoai-runtime -n kozmoai --create-namespace --set downloadFlows.flows[0].url=https://raw.githubusercontent.com/digitranslab/kozmoai/dev/src/backend/base/kozmoai/initial_setup/starter_projects/Basic%20Prompting%20(Hello%2C%20world!).json
+	helm install my-kozmoai-app digitranslab/kozmoai-runtime -n kozmoai --create-namespace --set downloadFlows.flows[0].url=https://raw.githubusercontent.com/digitranslab/kozmoai/dev/src/backend/base/kozmoai/initial_setup/starter_projects/Basic%20Prompting%20(Hello%2C%20world!).json
 	
 	```
 

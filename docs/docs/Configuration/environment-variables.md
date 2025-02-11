@@ -43,7 +43,7 @@ set VARIABLE_NAME='VALUE'
 docker run -it --rm \
     -p 7860:7860 \
     -e VARIABLE_NAME='VALUE' \
-    kozmoai/kozmoai:latest
+    digitranslab/kozmoai:latest
 ```
 </TabItem>
 
@@ -85,7 +85,7 @@ If it detects a supported environment variable, then it automatically adopts the
     docker run -it --rm \
         -p 7860:7860 \
         --env-file .env \
-        kozmoai/kozmoai:latest
+        digitranslab/kozmoai:latest
     ```
     </TabItem>
 

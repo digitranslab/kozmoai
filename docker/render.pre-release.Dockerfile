@@ -1,1 +1,1 @@
-FROM kozmoai/kozmoai:1.0-alpha
+FROM digitranslab/kozmoai:1.0-alpha

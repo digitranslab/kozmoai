@@ -67,7 +67,7 @@ services:
         - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-http.middlewares=${STACK_NAME?Variable not set}-www-redirect,${STACK_NAME?Variable not set}-https-redirect
 
   backend: &backend
-    image: "kozmoai/kozmoai-backend:latest"
+    image: "digitranslab/kozmoai-backend:latest"
     depends_on:
       - db
       - broker
@@ -165,7 +165,7 @@ services:
         - traefik.http.services.${STACK_NAME?Variable not set}-flower.loadbalancer.server.port=5555
 
   frontend:
-    image: "kozmoai/kozmoai-frontend:latest"
+    image: "digitranslab/kozmoai-frontend:latest"
     env_file:
       - .env
     restart: on-failure

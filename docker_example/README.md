@@ -35,7 +35,7 @@ The Docker Compose configuration spins up two services: `kozmoai` and `postgres`
 
 ### KozmoAi Service
 
-The `kozmoai` service uses the `kozmoai/kozmoai:latest` Docker image and exposes port 7860. It depends on the `postgres` service.
+The `kozmoai` service uses the `digitranslab/kozmoai:latest` Docker image and exposes port 7860. It depends on the `postgres` service.
 
 Environment variables:
 
@@ -62,4 +62,4 @@ Volumes:
 
 ## Switching to a Specific KozmoAi Version
 
-If you want to use a specific version of KozmoAi, you can modify the `image` field under the `kozmoai` service in the Docker Compose file. For example, to use version 1.0-alpha, change `kozmoai/kozmoai:latest` to `kozmoai/kozmoai:1.0-alpha`.
+If you want to use a specific version of KozmoAi, you can modify the `image` field under the `kozmoai` service in the Docker Compose file. For example, to use version 1.0-alpha, change `digitranslab/kozmoai:latest` to `digitranslab/kozmoai:1.0-alpha`.

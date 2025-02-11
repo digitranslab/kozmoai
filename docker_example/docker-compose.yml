@@ -1,6 +1,6 @@
 services:
   kozmoai:
-    image: kozmoai/kozmoai:latest # or another version tag on https://hub.docker.com/r/kozmoai/kozmoai
+    image: digitranslab/kozmoai:latest # or another version tag on https://hub.docker.com/r/digitranslab/kozmoai
     pull_policy: always               # set to 'always' when using 'latest' image
     ports:
       - "7860:7860"

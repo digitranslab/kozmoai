@@ -1,3 +1,3 @@
-FROM kozmoai/kozmoai:latest
+FROM digitranslab/kozmoai:latest
 
 ENTRYPOINT ["python", "-m", "kozmoai", "run"]

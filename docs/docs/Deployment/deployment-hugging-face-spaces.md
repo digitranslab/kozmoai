@@ -14,7 +14,7 @@ slug: /deployment-hugging-face-spaces
 HuggingFace provides a great alternative for running Kozmoai in their Spaces environment. This means you can run Kozmoai in the cloud without any local installation required. Here's how you can get Kozmoai up and running on HuggingFace Spaces:
 
 
-1. **Access Kozmoai Space**: Open a Chromium-based browser and navigate to the [Kozmoai Space](https://huggingface.co/spaces/Kozmoai/Kozmoai?duplicate=true). This link directs you to a pre-configured environment for Kozmoai.
+1. **Access Kozmoai Space**: Open a Chromium-based browser and navigate to the [Kozmoai Space](https://huggingface.co/spaces/digitranslab/kozmoai?duplicate=true). This link directs you to a pre-configured environment for Kozmoai.
 
 
 2. **Duplicate the Space**: You'll encounter an option to duplicate the Kozmoai space. This step involves a few simple decisions:

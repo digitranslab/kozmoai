@@ -50,7 +50,7 @@ on:
 
 env:
   POETRY_VERSION: "1.8.2"
-  TEST_TAG: "kozmoai/kozmoai:test"
+  TEST_TAG: "digitranslab/kozmoai:test"
 
 jobs:
   get-version:
@@ -152,23 +152,23 @@ jobs:
 
           if [[ "${{ inputs.release_type }}" == "base" || "${{ inputs.release_type }}" == "nightly-base" ]]; then
             # KOZMOAI-BASE RELEASE
-            echo "docker_tags=kozmoai/kozmoai${nightly_suffix}:base-${{ needs.get-version.outputs.version }},kozmoai/kozmoai${nightly_suffix}:base-latest" >> $GITHUB_OUTPUT
+            echo "docker_tags=digitranslab/kozmoai${nightly_suffix}:base-${{ needs.get-version.outputs.version }},digitranslab/kozmoai${nightly_suffix}:base-latest" >> $GITHUB_OUTPUT
             echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:base-${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai${nightly_suffix}:base-latest" >> $GITHUB_OUTPUT
             echo "file=./docker/build_and_push_base.Dockerfile" >> $GITHUB_OUTPUT
           else
             if [[ "${{ inputs.pre_release }}" == "true" ]]; then
               # KOZMOAI-MAIN PRE-RELEASE
-              echo "docker_tags=kozmoai/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }}" >> $GITHUB_OUTPUT
+              echo "docker_tags=digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }}" >> $GITHUB_OUTPUT
               echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }}" >> $GITHUB_OUTPUT
               echo "file=./docker/build_and_push.Dockerfile" >> $GITHUB_OUTPUT
             elif [[ "${{ inputs.release_type }}" == "main-ep" ]]; then
               # KOZMOAI-MAIN (ENTRYPOINT) RELEASE
-              echo "docker_tags=kozmoai/kozmoai-ep${nightly_suffix}:${{ needs.get-version.outputs.version }},kozmoai/kozmoai-ep${nightly_suffix}:latest" >> $GITHUB_OUTPUT
+              echo "docker_tags=digitranslab/kozmoai-ep${nightly_suffix}:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-ep${nightly_suffix}:latest" >> $GITHUB_OUTPUT
               echo "ghcr_tags=ghcr.io/digitranslab/kozmoai-ep${nightly_suffix}:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-ep${nightly_suffix}:latest" >> $GITHUB_OUTPUT
               echo "file=./docker/build_and_push_ep.Dockerfile" >> $GITHUB_OUTPUT
             elif [[ "${{ inputs.release_type }}" == "main" || "${{ inputs.release_type }}" == "nightly-main" ]]; then
               # KOZMOAI-MAIN RELEASE
-              echo "docker_tags=kozmoai/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }},kozmoai/kozmoai${nightly_suffix}:latest" >> $GITHUB_OUTPUT
+              echo "docker_tags=digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }},digitranslab/kozmoai${nightly_suffix}:latest" >> $GITHUB_OUTPUT
               echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai${nightly_suffix}:latest" >> $GITHUB_OUTPUT
               echo "file=./docker/build_and_push.Dockerfile" >> $GITHUB_OUTPUT
             else
@@ -245,12 +245,12 @@ jobs:
         include:
           - component: docker-backend
             dockerfile: ./docker/build_and_push_backend.Dockerfile
-            tags: kozmoai/kozmoai-backend:${{ needs.get-version.outputs.version }},kozmoai/kozmoai-backend:latest
-            kozmoai_image: kozmoai/kozmoai:${{ needs.get-version.outputs.version }}
+            tags: digitranslab/kozmoai-backend:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-backend:latest
+            kozmoai_image: digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
           - component: docker-frontend
             dockerfile: ./docker/frontend/build_and_push_frontend.Dockerfile
-            tags: kozmoai/kozmoai-frontend:${{ needs.get-version.outputs.version }},kozmoai/kozmoai-frontend:latest
-            kozmoai_image: kozmoai/kozmoai:${{ needs.get-version.outputs.version }}
+            tags: digitranslab/kozmoai-frontend:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-frontend:latest
+            kozmoai_image: digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
           - component: ghcr-backend
             dockerfile: ./docker/build_and_push_backend.Dockerfile
             tags: ghcr.io/digitranslab/kozmoai-backend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-backend:latest
@@ -317,4 +317,4 @@ jobs:
 #
 #      - name: Restart HuggingFace Spaces Build
 #        run: |
-#          uv run ./scripts/factory_restart_space.py --space "Kozmoai/Kozmoai" --token ${{ secrets.HUGGINGFACE_API_TOKEN }}
+#          uv run ./scripts/factory_restart_space.py --space "digitranslab/kozmoai" --token ${{ secrets.HUGGINGFACE_API_TOKEN }}

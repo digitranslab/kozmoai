@@ -11,7 +11,7 @@ services:
     autoDeploy: false
     envVars:
       - key: KOZMOAI_DATABASE_URL
-        value: sqlite:////app/data/.cache/kozmoai/kozmoai.db
+        value: sqlite:////app/data/.cache/digitranslab/kozmoai.db
       - key: KOZMOAI_HOST
         value: 0.0.0.0
       - key: KOZMOAI_PORT

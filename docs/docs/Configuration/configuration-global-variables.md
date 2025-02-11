@@ -127,7 +127,7 @@ docker run -it --rm \
     -e KOZMOAI_VARIABLES_TO_GET_FROM_ENVIRONMENT="VARIABLE1,VARIABLE2" \
     -e VARIABLE1="VALUE1" \
     -e VARIABLE2="VALUE2" \
-    kozmoai/kozmoai:latest
+    digitranslab/kozmoai:latest
 ```
 
 To pass `KOZMOAI_VARIABLES_TO_GET_FROM_ENVIRONMENT` from a `.env` file:
@@ -138,7 +138,7 @@ docker run -it --rm \
     --env-file .env \
     -e VARIABLE1="VALUE1" \
     -e VARIABLE2="VALUE2" \
-    kozmoai/kozmoai:latest
+    digitranslab/kozmoai:latest
 ```
 
 </TabItem>

@@ -43,5 +43,5 @@ The secret key is critical for encrypting sensitive data in Kozmoai. Follow thes
    ```
 
 - Use the default database locations:
-   - macOS/Linux: `PYTHON_LOCATION/site-packages/kozmoai/kozmoai.db`
+   - macOS/Linux: `PYTHON_LOCATION/site-packages/digitranslab/kozmoai.db`
    - Windows: `PYTHON_LOCATION\Lib\site-packages\kozmoai\kozmoai.db`
