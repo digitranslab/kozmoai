@@ -1,0 +1,42 @@
+networks:
+  dev-kozmoai:
+
+services:
+  kozmoai:
+    build:
+      context: ..
+      dockerfile: docker/dev.Dockerfile
+    image: dev-kozmoai
+    container_name: dev-kozmoai
+    restart: always
+    ports:
+      - "7860:7860"
+      - "3000:3000"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - KOZMOAI_DATABASE_URL=postgresql://kozmoai:kozmoai@postgres:5432/kozmoai
+      - KOZMOAI_SUPERUSER=kozmoai
+      - KOZMOAI_SUPERUSER_PASSWORD=kozmoai
+      - KOZMOAI_CONFIG_DIR=/var/lib/kozmoai
+    env_file:
+      - ../.env
+    volumes:
+      - ../:/app
+    depends_on:
+      - postgres
+    networks:
+      -  dev-kozmoai
+
+
+  postgres:
+    container_name: postgres
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: kozmoai
+      POSTGRES_PASSWORD: kozmoai
+      POSTGRES_DB: kozmoai
+    ports:
+      - "5432:5432"
+    networks:
+      -  dev-kozmoai
+

@@ -1,0 +1,24 @@
+services:
+  # A Docker web service
+  - type: web
+    name: kozmoai
+    runtime: docker
+    dockerfilePath: ./docker/render.Dockerfile
+    repo: https://github.com/digitranslab/kozmoai
+    branch: main
+    plan: standard
+    healthCheckPath: /health_check
+    autoDeploy: false
+    envVars:
+      - key: KOZMOAI_DATABASE_URL
+        value: sqlite:////app/data/.cache/kozmoai/kozmoai.db
+      - key: KOZMOAI_HOST
+        value: 0.0.0.0
+      - key: KOZMOAI_PORT
+        # default render port https://docs.render.com/web-services#port-binding
+        value: 10000
+      - key: KOZMOAI_LOG_LEVEL
+        value: INFO
+    disk:
+      name: kozmoai-data
+      mountPath: /app/data
