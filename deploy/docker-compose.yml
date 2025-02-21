@@ -41,10 +41,10 @@ services:
         # Uses environment variable DOMAIN
         # To disable www redirection remove the Host() you want to discard, here and
         # below for HTTPS
-        - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-http.rule=Host(`${DOMAIN?Variable not set}`) || Host(`www.${DOMAIN?Variable not set}`)
+        - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-http.rule=Host(`{{INSTANCE_PUBLIC_DNS}}`)
         - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-http.entrypoints=http
         # traefik-https the actual router using HTTPS
-        - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-https.rule=Host(`${DOMAIN?Variable not set}`) || Host(`www.${DOMAIN?Variable not set}`)
+        - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-https.rule=Host(`{{INSTANCE_PUBLIC_DNS}}`)
         - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-https.entrypoints=https
         - traefik.http.routers.${STACK_NAME?Variable not set}-proxy-https.tls=true
         # Use the "le" (Let's Encrypt) resolver created below
@@ -168,12 +168,20 @@ services:
     image: "digitranslab/kozmoai-frontend:latest"
     env_file:
       - .env
+    environment:
+      - HOST=0.0.0.0  # Ensure the frontend listens on all interfaces
     restart: on-failure
     deploy:
       labels:
         - traefik.enable=true
         - traefik.constraint-label-stack=${TRAEFIK_TAG?Variable not set}
-        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.rule=PathPrefix(`/`)
+        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.rule=Host(`{{INSTANCE_PUBLIC_DNS}}`)
+        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.entrypoints=http
+        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.middlewares=${STACK_NAME?Variable not set}-https-redirect
+        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.rule=Host(`{{INSTANCE_PUBLIC_DNS}}`)
+        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.entrypoints=https
+        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.tls=true
+        - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.tls.certresolver=le
         - traefik.http.services.${STACK_NAME?Variable not set}-frontend.loadbalancer.server.port=80
 
   broker:

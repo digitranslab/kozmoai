@@ -226,6 +226,7 @@ celerybeat.pid
 
 # Environments
 .env
+deploy/.env
 .venv
 env/
 venv/
@@ -277,3 +278,6 @@ src/frontend/temp
 
 .dspy_cache/
 *.db
+
+
+ledger-key-pair.pem
