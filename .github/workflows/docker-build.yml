@@ -139,7 +139,7 @@ jobs:
     needs: get-version
     outputs:
       docker_tags: ${{ steps.set-vars.outputs.docker_tags }}
-      ghcr_tags: ${{ steps.set-vars.outputs.ghcr_tags }}
+#      ghcr_tags: ${{ steps.set-vars.outputs.ghcr_tags }}
       file: ${{ steps.set-vars.outputs.file }}
     steps:
       - name: Set Dockerfile and Tags
@@ -153,29 +153,30 @@ jobs:
           if [[ "${{ inputs.release_type }}" == "base" || "${{ inputs.release_type }}" == "nightly-base" ]]; then
             # KOZMOAI-BASE RELEASE
             echo "docker_tags=digitranslab/kozmoai${nightly_suffix}:base-${{ needs.get-version.outputs.version }},digitranslab/kozmoai${nightly_suffix}:base-latest" >> $GITHUB_OUTPUT
-            echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:base-${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai${nightly_suffix}:base-latest" >> $GITHUB_OUTPUT
+            # echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:base-${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai${nightly_suffix}:base-latest" >> $GITHUB_OUTPUT
             echo "file=./docker/build_and_push_base.Dockerfile" >> $GITHUB_OUTPUT
           else
             if [[ "${{ inputs.pre_release }}" == "true" ]]; then
               # KOZMOAI-MAIN PRE-RELEASE
               echo "docker_tags=digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }}" >> $GITHUB_OUTPUT
-              echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }}" >> $GITHUB_OUTPUT
+              # echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }}" >> $GITHUB_OUTPUT
               echo "file=./docker/build_and_push.Dockerfile" >> $GITHUB_OUTPUT
             elif [[ "${{ inputs.release_type }}" == "main-ep" ]]; then
               # KOZMOAI-MAIN (ENTRYPOINT) RELEASE
               echo "docker_tags=digitranslab/kozmoai-ep${nightly_suffix}:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-ep${nightly_suffix}:latest" >> $GITHUB_OUTPUT
-              echo "ghcr_tags=ghcr.io/digitranslab/kozmoai-ep${nightly_suffix}:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-ep${nightly_suffix}:latest" >> $GITHUB_OUTPUT
+              # echo "ghcr_tags=ghcr.io/digitranslab/kozmoai-ep${nightly_suffix}:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-ep${nightly_suffix}:latest" >> $GITHUB_OUTPUT
               echo "file=./docker/build_and_push_ep.Dockerfile" >> $GITHUB_OUTPUT
             elif [[ "${{ inputs.release_type }}" == "main" || "${{ inputs.release_type }}" == "nightly-main" ]]; then
               # KOZMOAI-MAIN RELEASE
               echo "docker_tags=digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }},digitranslab/kozmoai${nightly_suffix}:latest" >> $GITHUB_OUTPUT
-              echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai${nightly_suffix}:latest" >> $GITHUB_OUTPUT
+              # echo "ghcr_tags=ghcr.io/digitranslab/kozmoai${nightly_suffix}:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai${nightly_suffix}:latest" >> $GITHUB_OUTPUT
               echo "file=./docker/build_and_push.Dockerfile" >> $GITHUB_OUTPUT
             else
               echo "Invalid release type. Exiting the workflow."
               exit 1
             fi
           fi
+
   build:
     runs-on: ubuntu-latest
     needs: [get-version, setup]
@@ -215,23 +216,23 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Login to Github Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN}}
-
-      - name: Build and push to Github Container Registry
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          file: ${{ needs.setup.outputs.file }}
-          tags: ${{ needs.setup.outputs.ghcr_tags }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+#      - name: Login to Github Container Registry
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN}}
+#
+#      - name: Build and push to Github Container Registry
+#        uses: docker/build-push-action@v6
+#        with:
+#          context: .
+#          push: true
+#          file: ${{ needs.setup.outputs.file }}
+#          tags: ${{ needs.setup.outputs.ghcr_tags }}
+#          platforms: linux/amd64,linux/arm64
+#          cache-from: type=gha
+#          cache-to: type=gha,mode=max
 
   build_components:
     if: ${{ inputs.release_type == 'main' }}
@@ -241,7 +242,8 @@ jobs:
     needs: [build, get-version]
     strategy:
       matrix:
-        component: [docker-backend, docker-frontend, ghcr-backend, ghcr-frontend]
+        component: [docker-backend, docker-frontend]
+#        component: [docker-backend, docker-frontend, ghcr-backend, ghcr-frontend]
         include:
           - component: docker-backend
             dockerfile: ./docker/build_and_push_backend.Dockerfile
@@ -251,14 +253,14 @@ jobs:
             dockerfile: ./docker/frontend/build_and_push_frontend.Dockerfile
             tags: digitranslab/kozmoai-frontend:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-frontend:latest
             kozmoai_image: digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
-          - component: ghcr-backend
-            dockerfile: ./docker/build_and_push_backend.Dockerfile
-            tags: ghcr.io/digitranslab/kozmoai-backend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-backend:latest
-            kozmoai_image: ghcr.io/digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
-          - component: ghcr-frontend
-            dockerfile: ./docker/frontend/build_and_push_frontend.Dockerfile
-            tags: ghcr.io/digitranslab/kozmoai-frontend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-frontend:latest
-            kozmoai_image: ghcr.io/digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
+#          - component: ghcr-backend
+#            dockerfile: ./docker/build_and_push_backend.Dockerfile
+#            tags: ghcr.io/digitranslab/kozmoai-backend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-backend:latest
+#            kozmoai_image: ghcr.io/digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
+#          - component: ghcr-frontend
+#            dockerfile: ./docker/frontend/build_and_push_frontend.Dockerfile
+#            tags: ghcr.io/digitranslab/kozmoai-frontend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-frontend:latest
+#            kozmoai_image: ghcr.io/digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
     steps:
       - name: Check out the code at a specific ref
         uses: actions/checkout@v4
@@ -275,13 +277,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Login to Github Container Registry
-        if: ${{ matrix.component == 'ghcr-backend' }} || ${{ matrix.component == 'ghcr-frontend' }}
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN}}
+#      - name: Login to Github Container Registry
+#        if: ${{ matrix.component == 'ghcr-backend' }} || ${{ matrix.component == 'ghcr-frontend' }}
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN}}
 
       - name: Wait for propagation (for backend)
         run: sleep 120
@@ -295,7 +297,6 @@ jobs:
             KOZMOAI_IMAGE=${{ matrix.kozmoai_image }}
           file: ${{ matrix.dockerfile }}
           tags: ${{ matrix.tags }}
-          # provenance: false will result in a single manifest for all platforms which makes the image pullable from arm64 machines via the emulation (e.g. Apple Silicon machines)
           provenance: false
 
 #  restart-space:
