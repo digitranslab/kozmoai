@@ -178,49 +178,55 @@ jobs:
 #            fi
 #          fi
 
-  build:
-    runs-on: ubuntu-latest
-#    needs: [get-version, setup]
-    steps:
-      - name: Check out the code at a specific ref
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.ref || inputs.main_version || github.ref }}
-          persist-credentials: true
-      - name: "Setup Environment"
-        uses: ./.github/actions/setup-uv
-      - name: Install the project
-        run: |
-          uv sync --no-dev --no-sources
+
+
+
+
+
+
+#  build:
+#    runs-on: ubuntu-latest
+##    needs: [get-version, setup]
+#    steps:
+#      - name: Check out the code at a specific ref
+#        uses: actions/checkout@v4
+#        with:
+#          ref: ${{ inputs.ref || inputs.main_version || github.ref }}
+#          persist-credentials: true
+#      - name: "Setup Environment"
+#        uses: ./.github/actions/setup-uv
 #      - name: Install the project
 #        run: |
-#          if [[ "${{ inputs.release_type }}" == "base" || "${{ inputs.release_type }}" == "nightly-base" ]]; then
-#            uv sync --directory src/backend/base --no-dev --no-sources
-#          else
-#            uv sync --no-dev --no-sources
-#          fi
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and Push to Docker Hub
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          file: ./docker/build_and_push.Dockerfile
-          tags: digitranslab/kozmoai:latest
-#          file: ${{ needs.setup.outputs.file }}
-#          tags: ${{ needs.setup.outputs.docker_tags }}
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+#          uv sync --no-dev --no-sources
+##      - name: Install the project
+##        run: |
+##          if [[ "${{ inputs.release_type }}" == "base" || "${{ inputs.release_type }}" == "nightly-base" ]]; then
+##            uv sync --directory src/backend/base --no-dev --no-sources
+##          else
+##            uv sync --no-dev --no-sources
+##          fi
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v3
+#
+#      - name: Login to Docker Hub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
+#
+#      - name: Build and Push to Docker Hub
+#        uses: docker/build-push-action@v6
+#        with:
+#          context: .
+#          push: true
+#          file: ./docker/build_and_push.Dockerfile
+#          tags: digitranslab/kozmoai:latest
+##          file: ${{ needs.setup.outputs.file }}
+##          tags: ${{ needs.setup.outputs.docker_tags }}
+#          platforms: linux/amd64,linux/arm64
+#          cache-from: type=gha
+#          cache-to: type=gha,mode=max
 #
 ##      - name: Login to Github Container Registry
 ##        uses: docker/login-action@v3
@@ -239,95 +245,95 @@ jobs:
 ##          platforms: linux/amd64,linux/arm64
 ##          cache-from: type=gha
 ##          cache-to: type=gha,mode=max
-#
-#  build_components:
+
+  build_components:
+    if: ${{ inputs.release_type == 'main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+#    needs: [build]
+#    needs: [build, get-version]
+    strategy:
+      matrix:
+        component: [docker-backend, docker-frontend]
+#        component: [docker-backend, docker-frontend, ghcr-backend, ghcr-frontend]
+        include:
+          - component: docker-backend
+            dockerfile: ./docker/build_and_push_backend.Dockerfile
+            tags: digitranslab/kozmoai-backend:latest
+#            tags: digitranslab/kozmoai-backend:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-backend:latest
+            kozmoai_image: digitranslab/kozmoai:latest
+#            kozmoai_image: digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
+
+          - component: docker-frontend
+            dockerfile: ./docker/frontend/build_and_push_frontend.Dockerfile
+            tags: digitranslab/kozmoai-frontend:latest
+#            tags: digitranslab/kozmoai-frontend:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-frontend:latest
+            kozmoai_image: digitranslab/kozmoai:latest
+#            kozmoai_image: digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
+#          - component: ghcr-backend
+#            dockerfile: ./docker/build_and_push_backend.Dockerfile
+#            tags: ghcr.io/digitranslab/kozmoai-backend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-backend:latest
+#            kozmoai_image: ghcr.io/digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
+#          - component: ghcr-frontend
+#            dockerfile: ./docker/frontend/build_and_push_frontend.Dockerfile
+#            tags: ghcr.io/digitranslab/kozmoai-frontend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-frontend:latest
+#            kozmoai_image: ghcr.io/digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
+    steps:
+      - name: Check out the code at a specific ref
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || inputs.main_version || github.ref }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        if: ${{ matrix.component == 'docker-backend' }} || ${{ matrix.component == 'docker-frontend' }}
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+#      - name: Login to Github Container Registry
+#        if: ${{ matrix.component == 'ghcr-backend' }} || ${{ matrix.component == 'ghcr-frontend' }}
+#        uses: docker/login-action@v3
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN}}
+
+      - name: Wait for propagation (for backend)
+        run: sleep 120
+
+      - name: Build and push ${{ matrix.component }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          build-args: |
+            KOZMOAI_IMAGE=${{ matrix.kozmoai_image }}
+          file: ${{ matrix.dockerfile }}
+          tags: ${{ matrix.tags }}
+          provenance: false
+
+#  restart-space:
+#    name: Restart HuggingFace Spaces
 #    if: ${{ inputs.release_type == 'main' }}
 #    runs-on: ubuntu-latest
-#    permissions:
-#      packages: write
-#    needs: [build]
-##    needs: [build, get-version]
+#    needs: [build, get-version]
 #    strategy:
 #      matrix:
-#        component: [docker-backend, docker-frontend]
-##        component: [docker-backend, docker-frontend, ghcr-backend, ghcr-frontend]
-#        include:
-#          - component: docker-backend
-#            dockerfile: ./docker/build_and_push_backend.Dockerfile
-#            tags: digitranslab/kozmoai-backend:latest
-##            tags: digitranslab/kozmoai-backend:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-backend:latest
-#            kozmoai_image: digitranslab/kozmoai:latest
-##            kozmoai_image: digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
-#
-#          - component: docker-frontend
-#            dockerfile: ./docker/frontend/build_and_push_frontend.Dockerfile
-#            tags: digitranslab/kozmoai-frontend:latest
-##            tags: digitranslab/kozmoai-frontend:${{ needs.get-version.outputs.version }},digitranslab/kozmoai-frontend:latest
-#            kozmoai_image: digitranslab/kozmoai:latest
-##            kozmoai_image: digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
-##          - component: ghcr-backend
-##            dockerfile: ./docker/build_and_push_backend.Dockerfile
-##            tags: ghcr.io/digitranslab/kozmoai-backend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-backend:latest
-##            kozmoai_image: ghcr.io/digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
-##          - component: ghcr-frontend
-##            dockerfile: ./docker/frontend/build_and_push_frontend.Dockerfile
-##            tags: ghcr.io/digitranslab/kozmoai-frontend:${{ needs.get-version.outputs.version }},ghcr.io/digitranslab/kozmoai-frontend:latest
-##            kozmoai_image: ghcr.io/digitranslab/kozmoai:${{ needs.get-version.outputs.version }}
+#        python-version:
+#          - "3.12"
 #    steps:
 #      - name: Check out the code at a specific ref
 #        uses: actions/checkout@v4
 #        with:
 #          ref: ${{ inputs.ref || inputs.main_version || github.ref }}
+#      - name: "Setup Environment"
+#        uses: ./.github/actions/setup-uv
 #
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#
-#      - name: Login to Docker Hub
-#        if: ${{ matrix.component == 'docker-backend' }} || ${{ matrix.component == 'docker-frontend' }}
-#        uses: docker/login-action@v3
-#        with:
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
-#
-##      - name: Login to Github Container Registry
-##        if: ${{ matrix.component == 'ghcr-backend' }} || ${{ matrix.component == 'ghcr-frontend' }}
-##        uses: docker/login-action@v3
-##        with:
-##          registry: ghcr.io
-##          username: ${{ github.actor }}
-##          password: ${{ secrets.GITHUB_TOKEN}}
-#
-#      - name: Wait for propagation (for backend)
-#        run: sleep 120
-#
-#      - name: Build and push ${{ matrix.component }}
-#        uses: docker/build-push-action@v6
-#        with:
-#          context: .
-#          push: true
-#          build-args: |
-#            KOZMOAI_IMAGE=${{ matrix.kozmoai_image }}
-#          file: ${{ matrix.dockerfile }}
-#          tags: ${{ matrix.tags }}
-#          provenance: false
-#
-##  restart-space:
-##    name: Restart HuggingFace Spaces
-##    if: ${{ inputs.release_type == 'main' }}
-##    runs-on: ubuntu-latest
-##    needs: [build, get-version]
-##    strategy:
-##      matrix:
-##        python-version:
-##          - "3.12"
-##    steps:
-##      - name: Check out the code at a specific ref
-##        uses: actions/checkout@v4
-##        with:
-##          ref: ${{ inputs.ref || inputs.main_version || github.ref }}
-##      - name: "Setup Environment"
-##        uses: ./.github/actions/setup-uv
-##
-##      - name: Restart HuggingFace Spaces Build
-##        run: |
-##          uv run ./scripts/factory_restart_space.py --space "digitranslab/kozmoai" --token ${{ secrets.HUGGINGFACE_API_TOKEN }}
+#      - name: Restart HuggingFace Spaces Build
+#        run: |
+#          uv run ./scripts/factory_restart_space.py --space "digitranslab/kozmoai" --token ${{ secrets.HUGGINGFACE_API_TOKEN }}
