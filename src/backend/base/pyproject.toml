@@ -7,14 +7,7 @@ license = "MIT"
 keywords = ["nlp", "langchain", "openai", "gpt", "gui"]
 readme = "README.md"
 maintainers = [
-    { name = "Carlos Coelho", email = "carlos@kozmoai.org" },
-    { name = "Cristhian Zanforlin", email = "cristhian.lousa@gmail.com" },
-    { name = "Gabriel Almeida", email = "gabriel@kozmoai.org" },
-    { name = "Igor Carvalho", email = "igorr.ackerman@gmail.com" },
-    { name = "Lucas Eduoli", email = "lucaseduoli@gmail.com" },
-    { name = "Otávio Anovazzi", email = "otavio2204@gmail.com" },
-    { name = "Rodrigo Nader", email = "rodrigo@kozmoai.org" },
-    { name = "Italo dos Anjos", email = "italojohnnydosanjos@gmail.com" },
+    { name = "Digitrans, Inc.", email = "developers@digi-trans.org" },
 ]
 
 dependencies = [
@@ -180,12 +173,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 
-
-
-
 [project.urls]
 Repository = "https://github.com/digitranslab/kozmoai"
-Documentation = "https://docs.kozmoai.org"
+Documentation = "https://docs.kozmoai.cloud"
 
 # Optional dependencies for uv
 [project.optional-dependencies]

@@ -32,5 +32,5 @@ pip install kozmoai
 ```
 
 - **Cloud:** DataStax Kozmoai is a hosted environment with zero setup. [Sign up for a free account.](https://astra.datastax.com/signup?type=kozmoai)
-- **Self-managed:** Run Kozmoai in your environment. [Install Kozmoai](https://docs.kozmoai.org/get-started-installation) to run a local Kozmoai server, and then use the [Quickstart](https://docs.kozmoai.org/get-started-quickstart) guide to create and execute a flow.
+- **Self-managed:** Run Kozmoai in your environment. [Install Kozmoai](https://docs.kozmoai.cloud/get-started-installation) to run a local Kozmoai server, and then use the [Quickstart](https://docs.kozmoai.cloud/get-started-quickstart) guide to create and execute a flow.
 - **Hugging Face:** [Clone the space using this link](https://huggingface.co/spaces/digitranslab/kozmoai?duplicate=true) to create a Kozmoai workspace.

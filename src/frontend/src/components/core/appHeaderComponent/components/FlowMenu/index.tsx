@@ -501,7 +501,7 @@ export const MenuBar = ({}: {}): JSX.Element => {
                 </h2>
                 <p className="text-muted-foreground">
                   <a
-                    href="https://docs.kozmoai.org/configuration-auto-saving"
+                    href="https://docs.kozmoai.cloud/configuration-auto-saving"
                     className="text-primary underline"
                   >
                     Enable auto-saving

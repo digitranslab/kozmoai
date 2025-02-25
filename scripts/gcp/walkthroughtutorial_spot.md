@@ -1,7 +1,6 @@
 # Deploy Kozmoai on Google Cloud Platform
 
 **Duration**: 45 minutes  
-**Author**: [Robert Wilkins III](https://www.linkedin.com/in/robertwilkinsiii)
 
 ## Introduction
 

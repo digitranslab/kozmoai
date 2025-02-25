@@ -14,7 +14,7 @@ from kozmoai.schema import Data
 class NotionPageCreator(LCToolComponent):
     display_name: str = "Create Page "
     description: str = "A component for creating Notion pages."
-    documentation: str = "https://docs.kozmoai.org/integrations/notion/page-create"
+    documentation: str = "https://docs.kozmoai.cloud/integrations/notion/page-create"
     icon = "NotionDirectoryLoader"
 
     inputs = [

@@ -119,7 +119,7 @@ packages = ["src/backend/kozmoai"]
 
 [project.urls]
 Repository = "https://github.com/digitranslab/kozmoai"
-Documentation = "https://docs.kozmoai.org"
+Documentation = "https://docs.kozmoai.cloud"
 
 [project.optional-dependencies]
 deploy = [

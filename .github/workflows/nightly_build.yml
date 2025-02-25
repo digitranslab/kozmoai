@@ -62,7 +62,7 @@ jobs:
         run: |
           # If the main tag does not exist in GH, we create the base tag from the existing codebase.
 
-          git config --global user.email "bot-nightly-builds@kozmoai.org"
+          git config --global user.email "bot-nightly-builds@digi-trans.org"
           git config --global user.name "Kozmoai Bot"
 
           MAIN_TAG="${{ steps.generate_main_tag.outputs.main_tag }}"

@@ -27,7 +27,7 @@ from pydantic import BaseModel
 class AllInputsComponent(Component):
     display_name = "All Inputs Component"
     description = "A component with all input types available in Kozmoai."
-    documentation: str = "http://docs.kozmoai.org/components/all_inputs"
+    documentation: str = "http://docs.kozmoai.cloud/components/all_inputs"
     icon = "code"
     name = "AllInputsComponent"
 

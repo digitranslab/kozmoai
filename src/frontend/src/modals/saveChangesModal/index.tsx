@@ -59,7 +59,7 @@ export function SaveChangesModal({
             <a
               target="_blank"
               className="underline"
-              href="https://docs.kozmoai.org/configuration-auto-saving"
+              href="https://docs.kozmoai.cloud/configuration-auto-saving"
             >
               Enable auto-saving
             </a>{" "}

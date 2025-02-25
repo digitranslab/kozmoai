@@ -109,7 +109,7 @@ export const AccountMenu = () => {
                 </span>
               </HeaderMenuItemButton>
             ) : (
-              <HeaderMenuItemLink newPage href="https://docs.kozmoai.org">
+              <HeaderMenuItemLink newPage href="https://docs.kozmoai.cloud">
                 <span data-testid="menu_docs_button" id="menu_docs_button">
                   Docs
                 </span>

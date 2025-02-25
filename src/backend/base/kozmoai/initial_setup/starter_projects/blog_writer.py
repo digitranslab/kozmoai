@@ -22,7 +22,7 @@ def blog_writer_graph(template: str | None = None):
 Blog:
 """)
     url_component = URLComponent()
-    url_component.set(urls=["https://kozmoai.org/", "https://docs.kozmoai.org/"])
+    url_component.set(urls=["https://kozmoai.cloud/", "https://docs.kozmoai.cloud/"])
     parse_data_component = ParseDataComponent()
     parse_data_component.set(data=url_component.fetch_content)
 

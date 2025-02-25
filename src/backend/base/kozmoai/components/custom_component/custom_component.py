@@ -7,7 +7,7 @@ from kozmoai.schema import Data
 class CustomComponent(Component):
     display_name = "Custom Component"
     description = "Use as a template to create your own component."
-    documentation: str = "https://docs.kozmoai.org/components-custom-components"
+    documentation: str = "https://docs.kozmoai.cloud/components-custom-components"
     icon = "code"
     name = "CustomComponent"
 

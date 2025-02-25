@@ -10,7 +10,7 @@ from kozmoai.utils.util import unescape_string
 class CharacterTextSplitterComponent(LCTextSplitterComponent):
     display_name = "CharacterTextSplitter"
     description = "Split text by number of characters."
-    documentation = "https://docs.kozmoai.org/components/text-splitters#charactertextsplitter"
+    documentation = "https://docs.kozmoai.cloud/components/text-splitters#charactertextsplitter"
     name = "CharacterTextSplitter"
     icon = "LangChain"
 

@@ -9,7 +9,7 @@ from kozmoai.inputs import DataInput, DropdownInput, IntInput
 class LanguageRecursiveTextSplitterComponent(LCTextSplitterComponent):
     display_name: str = "Language Recursive Text Splitter"
     description: str = "Split text into chunks of a specified length based on language."
-    documentation: str = "https://docs.kozmoai.org/components/text-splitters#languagerecursivetextsplitter"
+    documentation: str = "https://docs.kozmoai.cloud/components/text-splitters#languagerecursivetextsplitter"
     name = "LanguageRecursiveTextSplitter"
     icon = "LangChain"
 

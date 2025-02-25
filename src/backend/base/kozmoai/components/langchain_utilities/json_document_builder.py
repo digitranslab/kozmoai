@@ -24,7 +24,7 @@ class JSONDocumentBuilder(CustomComponent):
     legacy: bool = True
 
     output_types: list[str] = ["Document"]
-    documentation: str = "https://docs.kozmoai.org/components/utilities#json-document-builder"
+    documentation: str = "https://docs.kozmoai.cloud/components/utilities#json-document-builder"
 
     field_config = {
         "key": {"display_name": "Key"},

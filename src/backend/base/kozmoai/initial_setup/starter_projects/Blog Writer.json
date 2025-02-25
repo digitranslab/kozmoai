@@ -1370,7 +1370,7 @@
                 "trace_as_input": true,
                 "trace_as_metadata": true,
                 "type": "str",
-                "value": ["https://kozmoai.org/", "https://docs.kozmoai.org/"]
+                "value": ["https://kozmoai.cloud/", "https://docs.kozmoai.cloud/"]
               }
             },
             "tool_mode": false

@@ -11,7 +11,7 @@ from kozmoai.schema import Data
 class NotionUserList(LCToolComponent):
     display_name = "List Users "
     description = "Retrieve users from Notion."
-    documentation = "https://docs.kozmoai.org/integrations/notion/list-users"
+    documentation = "https://docs.kozmoai.cloud/integrations/notion/list-users"
     icon = "NotionDirectoryLoader"
 
     inputs = [

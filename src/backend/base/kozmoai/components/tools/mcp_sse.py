@@ -59,7 +59,7 @@ class MCPSse(Component):
     tool_names = [str]
     display_name = "MCP Tools (SSE)"
     description = "Connects to an MCP server over SSE and exposes it's tools as kozmoai tools to be used by an Agent."
-    documentation: str = "https://docs.kozmoai.org/components-custom-components"
+    documentation: str = "https://docs.kozmoai.cloud/components-custom-components"
     icon = "code"
     name = "MCPSse"
 

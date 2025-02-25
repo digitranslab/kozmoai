@@ -10,7 +10,7 @@ from kozmoai.utils.util import unescape_string
 class RecursiveCharacterTextSplitterComponent(LCTextSplitterComponent):
     display_name: str = "Recursive Character Text Splitter"
     description: str = "Split text trying to keep all related text together."
-    documentation: str = "https://docs.kozmoai.org/components-processing"
+    documentation: str = "https://docs.kozmoai.cloud/components-processing"
     name = "RecursiveCharacterTextSplitter"
     icon = "LangChain"
 

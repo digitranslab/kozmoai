@@ -853,7 +853,7 @@
                                 "placeholder": "",
                                 "show": true,
                                 "multiline": false,
-                                "value": "http://docs.kozmoai.org/examples/how-upload-examples",
+                                "value": "http://docs.kozmoai.cloud/examples/how-upload-examples",
                                 "password": false,
                                 "name": "web_path",
                                 "display_name": "Web Page",

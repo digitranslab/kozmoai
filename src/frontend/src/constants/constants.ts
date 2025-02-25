@@ -370,7 +370,7 @@ export const ADJECTIVES: string[] = [
 export const NOUNS: string[] = [
   "albattani",
   "allen",
-  "almeida",
+  "digitrans",
   "archimedes",
   "ardinghelli",
   "aryabhata",

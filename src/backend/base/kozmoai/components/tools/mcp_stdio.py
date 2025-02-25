@@ -84,7 +84,7 @@ class MCPStdio(Component):
     description = (
         "Connects to an MCP server over stdio and exposes it's tools as kozmoai tools to be used by an Agent."
     )
-    documentation: str = "https://docs.kozmoai.org/components-custom-components"
+    documentation: str = "https://docs.kozmoai.cloud/components-custom-components"
     icon = "code"
     name = "MCPStdio"
 
