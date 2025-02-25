@@ -219,7 +219,7 @@ jobs:
           context: .
           push: true
           file: ./docker/build_and_push.Dockerfile
-          tags: digitranslab/kozmoai:base-latest
+          tags: digitranslab/kozmoai:latest
 #          file: ${{ needs.setup.outputs.file }}
 #          tags: ${{ needs.setup.outputs.docker_tags }}
           platforms: linux/amd64,linux/arm64
