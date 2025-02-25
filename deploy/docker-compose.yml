@@ -148,7 +148,6 @@ services:
       - default
     environment:
       - FLOWER_PORT=5555
-
     command: /bin/sh -c "python -m celery -A kozmoai.worker.celery_app --broker=${BROKER_URL?Variable not set} flower --port=5555"
     deploy:
       labels:
