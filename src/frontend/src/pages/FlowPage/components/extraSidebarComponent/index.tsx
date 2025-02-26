@@ -325,9 +325,9 @@ export default function ExtraSidebar(): JSX.Element {
                   className="w-[22px] text-primary"
                 />
 
-//                 <span className="components-disclosure-title">
-//                   Discover More
-//                 </span>
+                <span className="components-disclosure-title">
+                  Discover More
+                </span>
 
               </div>
               <div className="components-disclosure-div">
