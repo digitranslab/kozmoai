@@ -24,9 +24,11 @@ const SidebarMenuButtons = ({
                 name="Store"
                 className="h-4 w-4 text-muted-foreground"
               />
-              <span className="flex-1 group-data-[state=open]/collapsible:font-semibold">
-                Discover more components
-              </span>
+
+//               <span className="flex-1 group-data-[state=open]/collapsible:font-semibold">
+//                 Discover more components
+//               </span>
+
               <ForwardedIconComponent
                 name="SquareArrowOutUpRight"
                 className="h-4 w-4 opacity-0 transition-all group-hover/discover:opacity-100"
